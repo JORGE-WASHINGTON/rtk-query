@@ -25,14 +25,14 @@ const api = createApi({
       onStart({ id, ...patch }, { dispatch, context }) {
         // When we start the request, just immediately update the cache
         context.undoPost = dispatch(
-          api.util.updateQueryResult('getPost', id, (draft) => {
+          api.util.updateQueryData('getPost', id, (draft) => {
             Object.assign(draft, patch);
           })
         ).inversePatches;
       },
       onError({ id }, { dispatch, context }) {
         // If there is an error, roll it back
-        dispatch(api.util.patchQueryResult('getPost', id, context.undoPost));
+        dispatch(api.util.patchQueryData('getPost', id, context.undoPost));
       },
       invalidatesTags: ['Post'],
     }),
